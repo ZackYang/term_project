@@ -1,0 +1,19 @@
+<div><%= paginate @products, :theme => 'twitter-bootstrap-3' %></div>
+<div class="row">
+  <% @products.each do |product| %>
+  <div class="product_link">
+    <%= link_to product do %>
+    <div class="product_img_wrapper"><%= image_tag product.img %></div>
+    <div>
+      <h5>
+        <%= product.name %>
+      </h5>
+      <p>
+        <%= product.price %>
+      </p>
+    </div>
+    <% end %>
+  </div>
+  <% end %>
+</div>
+<div><%= paginate @products, :theme => 'twitter-bootstrap-3' %></div>

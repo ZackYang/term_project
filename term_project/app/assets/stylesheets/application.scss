@@ -13,3 +13,35 @@
  *= require_tree .
  *= require_self
  */
+
+body {
+  font-family: 'Podkova', serif;
+  a {
+    color: black;
+    &:hover {
+      color: #333;
+    }
+  }
+}
+
+.logo-bar {
+  text-align: center;
+  background-color: black;
+  height: 80px;
+  width: 100%;
+  color: white;
+  font-family: 'Leckerli One', cursive;
+  margin-top: 50px;
+  h1 {
+    a {
+      color: white;
+    }
+  }
+}
+
+.fix-bar {
+  position: fixed;
+  width: 100%;
+  z-index: 1000;
+  top: 0;
+}
