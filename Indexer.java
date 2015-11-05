@@ -1,10 +1,5 @@
 /*
- * This file is part of the LIRE project: http://www.semanticmetadata.net/lire
- * LIRE is free software; you can redistribute it and/or modify
- * it under the terms of the GNU General Public License as published by
- * the Free Software Foundation; either version 2 of the License, or
- * (at your option) any later version.
- *
+ * 
  * LIRE is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
@@ -35,8 +30,6 @@
  * --------------------
  * (c) 2002-2013 by Mathias Lux (mathias@juggle.at)
  *  http://www.semanticmetadata.net/lire, http://www.lire-project.net
- *
- * Updated: 15.04.13 16:57
  */
 
 import java.awt.image.BufferedImage;
@@ -122,7 +115,7 @@ public class Indexer {
                 
                 iw.addDocument(document);
             } catch (Exception e) {
-                System.err.println("Error reading image or indexing it.");
+                System.err.println("Error reading image or indexing "+ imageFilePath);
                 e.printStackTrace();
             }
         }

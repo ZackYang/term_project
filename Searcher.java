@@ -4,7 +4,6 @@ import java.io.File;
 import java.io.IOException;
 import javax.imageio.ImageIO;
 import net.semanticmetadata.lire.DocumentBuilder;
-
 import net.semanticmetadata.lire.ImageSearchHits;
 import net.semanticmetadata.lire.ImageSearcher;
 import net.semanticmetadata.lire.imageanalysis.ColorLayout;
@@ -31,12 +30,26 @@ import org.apache.lucene.store.FSDirectory;
  * Date: 4.11.15
  */
 public class Searcher {
+    private static int numdoc = 5;
+    public static boolean isNumeric(String str)  
+    {  
+        try  
+        {  
+            int number = Integer.parseInt(str);
+            numdoc = number;
+        }  
+        catch(NumberFormatException nfe)  
+        {  
+            return false;  
+        }  
+        return true;  
+    }
     public static void main(String[] args)throws IOException{
         BufferedImage processedImage= null;
         boolean passed = false;
-        if (args.length == 2) {
+        if (args.length == 3) {
             File f = new File(args[0]);
-            if (f.exists()) {
+            if (f.exists() && isNumeric(args[2])) {
                 if(args[1].equals("-color") || args[1].equals("-texture") || args[1].equals("-combine") ||args[1].equals("-shape")){
                     try {
                         BufferedImage img = ImageIO.read(f);
@@ -49,8 +62,8 @@ public class Searcher {
             }
         }
         if (!passed) {
-            System.out.println("No image or flag given as first argument.");
-            System.out.println("Run \"Searcher <query image> -flag\" to search for <query image>.");
+            System.out.println("The argument format is not correct.");
+            System.out.println("Run \"Searcher <query image> -flag numofoutputresult\" to search for <query image>.");
             System.exit(1);
         }
         IndexReader ir = null;
@@ -59,22 +72,21 @@ public class Searcher {
         if(args[1].equals("-color")){
             ir = DirectoryReader.open(FSDirectory.open(new File("./color_index")));
 //new File("/home/bruce/NetBeansProjects/946Indexer/color_index")));
-            searcher = new GenericFastImageSearcher(10, ColorLayout.class);
+            searcher = new GenericFastImageSearcher(numdoc, ColorLayout.class);
         }
         else if(args[1].equals("-texture")){
             ir = DirectoryReader.open(FSDirectory.open(new File("./texture_index")));
                     //new File("/home/bruce/NetBeansProjects/946Indexer/texture_index")));
-            searcher = new GenericFastImageSearcher(10, Gabor.class);
+            searcher = new GenericFastImageSearcher(numdoc, Gabor.class);
         }else if(args[1].equals("-shape")){
             ir = DirectoryReader.open(FSDirectory.open(new File("./shape_index")));
             //new File("/home/bruce/NetBeansProjects/946Indexer/shape_index")));
-            searcher = new GenericFastImageSearcher(10, EdgeHistogram.class);
+            searcher = new GenericFastImageSearcher(numdoc, EdgeHistogram.class);
         }       
         else{
-            ir = DirectoryReader.open(FSDirectory.open(new File("./combine_index")));
-            
+            ir = DirectoryReader.open(FSDirectory.open(new File("./combine_index")));            
             //new File("/home/bruce/NetBeansProjects/946Indexer/combine_index")));
-            searcher = new GenericFastImageSearcher(10, FCTH.class);
+            searcher = new GenericFastImageSearcher(numdoc, FCTH.class);
                
         }
 
