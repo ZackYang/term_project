@@ -57,18 +57,23 @@ public class Searcher {
         ImageSearcher searcher = null;
 
         if(args[1].equals("-color")){
-            ir = DirectoryReader.open(FSDirectory.open(new File("/home/bruce/NetBeansProjects/946Indexer/color_index")));
+            ir = DirectoryReader.open(FSDirectory.open(new File("./color_index")));
+//new File("/home/bruce/NetBeansProjects/946Indexer/color_index")));
             searcher = new GenericFastImageSearcher(10, ColorLayout.class);
         }
         else if(args[1].equals("-texture")){
-            ir = DirectoryReader.open(FSDirectory.open(new File("/home/bruce/NetBeansProjects/946Indexer/texture_index")));
+            ir = DirectoryReader.open(FSDirectory.open(new File("./texture_index")));
+                    //new File("/home/bruce/NetBeansProjects/946Indexer/texture_index")));
             searcher = new GenericFastImageSearcher(10, Gabor.class);
         }else if(args[1].equals("-shape")){
-            ir = DirectoryReader.open(FSDirectory.open(new File("/home/bruce/NetBeansProjects/946Indexer/shape_index")));
+            ir = DirectoryReader.open(FSDirectory.open(new File("./shape_index")));
+            //new File("/home/bruce/NetBeansProjects/946Indexer/shape_index")));
             searcher = new GenericFastImageSearcher(10, EdgeHistogram.class);
         }       
         else{
-            ir = DirectoryReader.open(FSDirectory.open(new File("/home/bruce/NetBeansProjects/946Indexer/combine_index")));
+            ir = DirectoryReader.open(FSDirectory.open(new File("./combine_index")));
+            
+            //new File("/home/bruce/NetBeansProjects/946Indexer/combine_index")));
             searcher = new GenericFastImageSearcher(10, FCTH.class);
                
         }
