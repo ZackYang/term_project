@@ -19,25 +19,28 @@ import javax.imageio.ImageIO;
 import net.semanticmetadata.lire.DocumentBuilderFactory;
 import net.semanticmetadata.lire.impl.ChainedDocumentBuilder;
 import net.semanticmetadata.lire.impl.SurfDocumentBuilder;
+import net.semanticmetadata.lire.indexing.parallel.ParallelIndexer;
 import static net.semanticmetadata.lire.utils.ImageUtils.cropImage;
 import static net.semanticmetadata.lire.utils.ImageUtils.scaleImage;
 import net.semanticmetadata.lire.utils.LuceneUtils;
 import org.apache.lucene.document.Document;
 import org.apache.lucene.index.IndexWriter;
 public class Visualwords {
-    private static String dir="images";
+
     private static String index="./images_index";
+    private final static int numberofThread = 16;
+    private static String datasetPath = "./images";
+    private static String indexPath = "./index";
     int numClusters=2000;
-    public static void setUp(String dirName, String indexPath){
-        dir = dirName;
-        index=indexPath;
+    public static void setUp(String dirName, String indexName){
+        datasetPath = dirName;
+        indexPath = indexName;
     }
-    
     public static void indexFiles(ArrayList<String> images)throws IOException{
         ChainedDocumentBuilder documentBuilder = new ChainedDocumentBuilder();
         documentBuilder.addBuilder(new SurfDocumentBuilder());
         documentBuilder.addBuilder(DocumentBuilderFactory.getColorLayoutBuilder());
-        IndexWriter iw = LuceneUtils.createIndexWriter(index, true);//, LuceneUtils.AnalyzerType.WhitespaceAnalyzer);
+        IndexWriter iw = LuceneUtils.createIndexWriter(indexPath, true);//, LuceneUtils.AnalyzerType.WhitespaceAnalyzer);
   
         for(String identifier: images){
             try{
@@ -51,11 +54,16 @@ public class Visualwords {
             }
         }
         iw.close();
-        //IndexReader ir = DirectoryReader.open(FSDirectory.open(new File(index)));
-        //BOVWBuilder sfh = new BOVWBuilder(ir, new SurfFeature(), 1000, 500);
-        //sfh.index();
-        
         System.out.println("Finished indexing");
+        ParallelIndexer parallelIndexer = new ParallelIndexer(numberofThread, indexPath, datasetPath, true) {
+            @Override
+            public void addBuilders(ChainedDocumentBuilder builder) {
+                builder.addBuilder(new SurfDocumentBuilder());
+            }
+        };
+        parallelIndexer.run();
+
+        System.out.println("Finished clustering");
     }
     public static void main(String[] args)throws IOException{
         boolean passed = false;
@@ -67,13 +75,12 @@ public class Visualwords {
             }
         }
         if (!passed) {
-            System.out.println("No directory given as first argument.");
             System.out.println("Run \"Visualwords <directory> <index directory>\" to index files of a directory.");
             System.exit(1);
         }
         setUp(args[0], args[1]);
         ArrayList<String>images = new ArrayList();
-        File directory = new File(args[0]);           
+        File directory = new File(datasetPath);           
         String[] extensions = new String[] {"jpg", "jpeg"};
         List<File> files = (List<File>)org.apache.commons.io.FileUtils.listFiles(directory, extensions, true);
         for(File file: files){
