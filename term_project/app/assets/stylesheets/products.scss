@@ -1,3 +1,138 @@
 // Place all the styles related to the products controller here.
 // They will automatically be included in application.css.
 // You can use Sass (SCSS) here: http://sass-lang.com/
+
+
+.product_link {
+  display: inline-block;
+  float: left;
+  width: 228px;
+  
+  .product_img_wrapper {
+    
+    height: 330px;
+    overflow: hidden;
+    border: 5px white solid;
+    &:hover {
+      border: 5px #DDD solid;
+      img {
+        filter: contrast(200%);
+        -webkit-filter: grayscale(0.5);// blur(1px);
+      }
+    }
+    
+    img {
+      width: 220px;
+//      filter: contrast(200%);
+    }
+  }
+  h5 {
+    width: 220px;
+    height: 15px;
+    overflow-y: hidden;
+    
+  }
+}
+
+.product_details {
+  h3.product_name {
+    font-weight: bold;
+  }
+  
+  h4.product_price {
+    font-weight: bold;
+  }
+  
+  div.control_button {
+    
+    margin-top: 50px;
+    
+    button.add-to-cart {
+      color: #fff;
+      background-color: black;
+      border-color: black;
+      border-radius: 0;
+      width: 200px;
+      height: 100px;
+      font-size: 18px;
+      &:hover {
+        color: #fff;
+        background-color: white;
+        border-color: black;
+        color: black;
+        border-radius: 0;
+        width: 200px;
+        height: 100px;
+        font-size: 18px;
+        font-weight: bold;
+      }
+    }
+    
+    .add-to-wishlist {
+      color: #fff;
+      background-color: white;
+      border-color: black;
+      color: black;
+      border-radius: 0;
+      width: 260px;
+      height: 100px;
+      font-size: 18px;
+      font-weight: bold;
+      line-height: 80px;
+      &:hover {
+        color: #fff;
+        background-color: black;
+        border-color: black;
+        border-radius: 0;
+        width: 260px;
+        height: 100px;
+        font-size: 18px;
+      }
+    }
+  }
+  
+}
+
+.panel {
+  margin-top: 30px;
+  border-radius: 0;
+  .panel-heading {
+    background-color: white;
+  }
+  .panel-body {
+    height: 205px;
+  }
+}
+
+.title {
+  font-weight: bold;
+}
+
+.dropdown-menu {
+  width: 260px;
+  a {
+    font-weight: bold !important;
+  }
+}
+
+.pagination {
+  li {
+    a {
+      color: black;
+      &:hover {
+        color: black;
+      }
+    }
+    &.active {
+      a {
+        border-color: black;
+        background-color: black;
+        &:hover {
+          background-color: #ddd;
+          border-color: #ddd;
+          color: black;
+        }
+      }
+    }
+  }
+}

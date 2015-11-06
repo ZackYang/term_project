@@ -8,6 +8,13 @@ capybara-*.html
 /public/system
 /coverage/
 /spec/tmp
+/term_project/app/assets/images/products/
+/term_project/public/uploads/
+/term_project/combine_index/
+/term_project/texture_index/
+/term_project/color_index/
+/term_project/shape_index/
+/term_project/solr/
 **.orig
 rerun.txt
 pickle-email-*.html

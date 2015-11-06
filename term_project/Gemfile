@@ -30,6 +30,14 @@ gem "paperclip", "~> 4.3"
 
 gem "twitter-bootstrap-rails"
 
+gem 'kaminari'
+gem 'bootstrap-kaminari-views'
+
+gem 'sunspot_rails'
+gem 'sunspot_solr'
+
+gem 'mini_magick'
+
 # Use Unicorn as the app server
 # gem 'unicorn'
 
